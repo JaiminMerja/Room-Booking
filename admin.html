@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Bookings</title>
+</head>
+<body>
+    <h1>Manage Bookings</h1>
+
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Guests</th>
+            <th>Status</th>
+            <th>Special Requests</th>
+            <th>Action</th>
+        </tr>
+        {% for reservation in reservations %}
+        <tr>
+            <td>{{ reservation.id }}</td>
+            <td>{{ reservation.name }}</td>
+            <td>{{ reservation.email }}</td>
+            <td>{{ reservation.phone }}</td>
+            <td>{{ reservation.date }}</td>
+            <td>{{ reservation.time }}</td>
+            <td>{{ reservation.guests }}</td>
+            <td>{{ reservation.status }}</td>
+            <td>{{ reservation.special_requests }}</td>
+            <td>
+               
+                <form method="POST" action="/update_status/{{ reservation.id }}">
+                    <select name="status" required>
+                        <option value="Pending" {% if reservation.status == 'Pending' %} selected {% endif %}>Pending</option>
+                        <option value="Confirmed" {% if reservation.status == 'Confirmed' %} selected {% endif %}>Confirmed</option>
+                        <option value="Cancelled" {% if reservation.status == 'Cancelled' %} selected {% endif %}>Cancelled</option>
+                    </select>
+                    <button type="submit">Update</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
